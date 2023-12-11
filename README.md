@@ -62,3 +62,25 @@
 **Payment**
 > - [X] 결제를 완료한 결제 정보는 payments 모듈을 통해 관리되며, 결제 정보는 Payment 객체에 담겨 반한된다.
 </details>
+
+<details>
+<summary><b>🚀 3단계 - 수강신청(DB 적용)</b></summary>
+
+**요구사항**
+> - [X] Course 테이블 설계 및 객체 매핑
+> - [X] Course 저장
+> - [X] Course 조회
+> - [ ] Session 테이블 설계 및 객체 매핑
+> - [ ] Session 저장
+> - [ ] Session 조회
+> - [ ] Enrollment 테이블 설계 및 객체 매핑
+> - [ ] Enrollment 저장
+> - [ ] Enrollment 조회
+> - [ ] CoverImage 테이블 설계 및 객체 매핑
+> - [ ] CoverImage 저장
+> - [ ] CoverImage 조회
+> - [ ] SessionUser 테이블 설계 및 객체 매핑
+> - [ ] SessionUser 저장
+> - [ ] SessionUser 조회
+> - 참고. Payment 테이블 매핑 고려하지 않아도 된다.
+</details>
