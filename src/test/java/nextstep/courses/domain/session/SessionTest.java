@@ -16,14 +16,14 @@ class SessionTest {
     @Test
     void 무료_강의일_경우_수강_신청_인원_제한_없음() {
         Session session = Session.createFreeSession(null, newPeriod());
-        assertThat(session.limitedEnrollment()).isZero();
+        assertThat(session.sessionFee().limitedEnrollment()).isZero();
     }
 
     @Test
     void 유료_강의일_경우_수강_신청_인원_제한_있음() {
-        SessionFee sessionFee = new SessionFee(800_000L);
         int limitedEnrollment = 100;
-        Session session = Session.createPaidSession(null, newPeriod(), 100, sessionFee);
-        assertThat(session.limitedEnrollment()).isEqualTo(100);
+        SessionFee sessionFee = new SessionFee(800_000L, limitedEnrollment);
+        Session session = Session.createPaidSession(null, newPeriod(), sessionFee);
+        assertThat(session.sessionFee().limitedEnrollment()).isEqualTo(100);
     }
 }

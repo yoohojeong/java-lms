@@ -34,8 +34,8 @@ class EnrollmentTest {
     @Test
     void 유료_강의_결제_금액과_수강료가_일치하지_않으면_에러() {
         Payment payment = new Payment(790_000L);
-        SessionFee sessionFee = new SessionFee(800_000L);
-        Session session = Session.createPaidSession(null, newPeriod(), 100, sessionFee);
+        SessionFee sessionFee = new SessionFee(800_000L, 100);
+        Session session = Session.createPaidSession(null, newPeriod(), sessionFee);
         assertThatThrownBy(() -> Enrollment.enroll(payment, session, null)).isInstanceOf(
             IllegalArgumentException.class).hasMessage("결제한 금액과 수강료가 일치하지 않습니다.");
     }

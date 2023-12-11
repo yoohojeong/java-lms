@@ -10,37 +10,33 @@ public class Session {
     private final Long id;
     private final CoverImage coverImage;
     private final Period period;
-    private final int limitedEnrollment;
     private final SessionFee sessionFee;
     private SessionStatus sessionStatus;
 
-    private Session(Long id, CoverImage coverImage, Period period, int limitedEnrollment, SessionFee sessionFee,
-        SessionStatus sessionStatus) {
+    private Session(Long id, CoverImage coverImage, Period period, SessionFee sessionFee, SessionStatus sessionStatus) {
         this.id = id;
         this.sessionFee = sessionFee;
         this.coverImage = coverImage;
         this.period = period;
-        this.limitedEnrollment = limitedEnrollment;
         this.sessionStatus = sessionStatus;
     }
 
     public Session(SessionStatus sessionStatus) {
-        this(null, null, null, 0, new SessionFee(FREE_FEE), sessionStatus);
+        this(null, null, null, new SessionFee(FREE_FEE, 0), sessionStatus);
     }
 
     public static Session createFreeSession(CoverImage coverImage, Period period) {
         SessionStatus sessionStatus = updateSessionStatusToEnrollmentOpenOrPreparing(period);
-        return new Session(null, coverImage, period, UNLIMITED_ENROLLMENT, new SessionFee(FREE_FEE), sessionStatus);
+        return new Session(null, coverImage, period, new SessionFee(FREE_FEE, UNLIMITED_ENROLLMENT), sessionStatus);
     }
 
-    public static Session createPaidSession(CoverImage coverImage, Period period, int limitedEnrollment,
-        SessionFee sessionFee) {
+    public static Session createPaidSession(CoverImage coverImage, Period period, SessionFee sessionFee) {
         SessionStatus sessionStatus = updateSessionStatusToEnrollmentOpenOrPreparing(period);
-        return new Session(null, coverImage, period, limitedEnrollment, sessionFee, sessionStatus);
+        return new Session(null, coverImage, period, sessionFee, sessionStatus);
     }
 
-    public int limitedEnrollment() {
-        return limitedEnrollment;
+    public SessionFee sessionFee() {
+        return sessionFee;
     }
 
     public boolean isOpened() {
@@ -58,7 +54,7 @@ public class Session {
         if (sessionFee.isFree()) {
             return false;
         }
-        return enrollmentCount > limitedEnrollment;
+        return sessionFee.isOverEnrollmentCount(enrollmentCount);
     }
 
     private static SessionStatus updateSessionStatusToEnrollmentOpenOrPreparing(Period period) {

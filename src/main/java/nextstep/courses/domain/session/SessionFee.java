@@ -2,18 +2,28 @@ package nextstep.courses.domain.session;
 
 public class SessionFee {
 
-    private final long value;
+    private final long fee;
+    private final int limitedEnrollment;
 
-    public SessionFee(long value) {
-        this.value = value;
 
+    public SessionFee(long fee, int limitedEnrollment) {
+        this.fee = fee;
+        this.limitedEnrollment = limitedEnrollment;
+    }
+
+    public int limitedEnrollment() {
+        return limitedEnrollment;
     }
 
     public boolean isFree() {
-        return value == 0;
+        return fee == 0;
     }
 
     public long value() {
-        return value;
+        return fee;
+    }
+
+    public boolean isOverEnrollmentCount(int enrollmentCount) {
+        return enrollmentCount > limitedEnrollment;
     }
 }
